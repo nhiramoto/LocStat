@@ -8,16 +8,10 @@ install:
   - pipenv install --dev
 
 stages:
-  - lint
   - test
 
 jobs:
   include:
-    - stage: lint
-
-      script:
-        - pipenv run lint
-
     - stage: test
 
       script:
