@@ -5,5 +5,6 @@
 
 import scrapy
 
+
 class GithubSpider(scrapy.Spider):
     name = 'github_spider'
