@@ -13,3 +13,7 @@ scrapy = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+lint = "flake8 --statistics"
+tests = "pytest -v --cov LocStat/tests"
