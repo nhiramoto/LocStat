@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-# vim: syntax=python :
-
-# Crawler para extrair informações do Github
 
 import scrapy
 
 
 class GithubSpider(scrapy.Spider):
+    """
+    A web scraper that extracts information from Github pages.
+    """
     name = 'github_spider'
+    allowed_domains = ['github.com']
+
+    def parse(self, response):
+        pass

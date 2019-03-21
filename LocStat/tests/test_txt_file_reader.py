@@ -28,13 +28,16 @@ class TestTxtFileReader:
         except:
             pass
         else:
-            assert type(repo_urls) is list, 'get_all method doesn\'t return a list.'
+            assert type(repo_urls) is list, \
+                'get_all method doesn\'t return a list.'
 
     def test_get_all_3_repositories(self):
-        file_path = os.path.join('LocStat', 'tests', 'txt_files', '3_repositories.txt')
+        file_path = os.path.join(
+            'LocStat', 'tests', 'txt_files', '3_repositories.txt')
         txt_file_reader = TxtFileReader(file_path)
         repo_urls = txt_file_reader.get_all()
-        assert len(repo_urls) == 3, 'Incorrect number of elements in the returned list.'
+        assert len(repo_urls) == 3, \
+            'Incorrect number of elements in the returned list.'
         assert all(type(url) is str for url in repo_urls), \
             'Returned list does not contain only strings.'
         assert repo_urls[0] == 'https://github.com/facebook/react'
