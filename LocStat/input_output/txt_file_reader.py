@@ -1,4 +1,4 @@
-from ..utils.github import Github
+from ..utils.url import Url
 
 
 class TxtFileReader:
@@ -21,5 +21,5 @@ class TxtFileReader:
         with open(self._file_path, 'r') as file:
             for line in file:
                 rel_url = line.strip(' \t\n/')
-                repo_urls.append(Github.get_absolute_url(rel_url))
+                repo_urls.append(Url.github_url(rel_url))
         return repo_urls

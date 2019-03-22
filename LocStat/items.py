@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: syntax=python :
 
-# Model dos itens recuperados pelos Spiders
+"""
+Model of itens scraped by the spider.
+"""
 
 import scrapy
 
@@ -11,18 +13,16 @@ class LocstatItem(scrapy.Item):
 
 
 class FileItem(scrapy.Item):
-    id = scrapy.Field()
     name = scrapy.Field()
-    size_bytes = scrapy.Field()
+    amount_lines = scrapy.Field()
+    amount_bytes = scrapy.Field()
 
 
 class DirectoryItem(FileItem):
-    pass
+    is_root = scrapy.Field()
+    repository_name = scrapy.Field()
+    children = scrapy.Field()
 
 
 class TextFileItem(FileItem):
-    pass
-
-
-class BinaryFileItem(FileItem):
-    pass
+    extension = scrapy.Field()
