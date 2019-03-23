@@ -1,4 +1,8 @@
 class Url:
+    """
+    This module implements useful methods that manipulate urls, used in the
+        project.
+    """
 
     _github_main_page_url = 'https://github.com'
     _googlecache_urlprefix = 'http://webcache.googleusercontent.com/search?q='
@@ -17,7 +21,7 @@ class Url:
     @staticmethod
     def cached(url):
         """
-        Get the cached version of url
+        Get the google cached version of url
         """
         if type(url) is str:
             return f'{Url._googlecache_urlprefix}{url}'

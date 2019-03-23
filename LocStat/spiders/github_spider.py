@@ -2,22 +2,83 @@
 
 import re
 import scrapy
+from scrapy.spidermiddlewares.httperror import HttpError
+from twisted.internet.error import TimeoutError, TCPTimedOutError
+
 from .. import items
+from ..utils.url import Url
 
 
 class GithubSpider(scrapy.Spider):
     """
     A web scraper that extracts information from public repositories of the
         corresponding pages in Github.
-    Each instance of the spider analyzes only one repository
+    To prevent confusion between pages, each instance of the spider analyzes
+        only one repository.
     """
     name = 'github_spider'
-    start_urls = ['https://github.com/nhtoshiaki/LocStat']
+
+    def __init__(self, repo_name=None, *args, **kwargs):
+        """
+        GithubSpider receives the repository name in the user/repository format
+            in the constructor.
+        """
+        super(GithubSpider, self).__init__(*args, **kwargs)
+        self.root_dir_item = {}
+        repo_name = 'nhtoshiaki/LocStat'
+        if repo_name is not None:
+            self.repo_name = repo_name
+            self.url = Url.github_url(repo_name)
+        else:
+            self.logger.critical('No repository set, make sure the repository \
+                                 is set before running the spider.')
+
+    def start_requests(self):
+        if self.url is not None:
+            yield scrapy.Request(url=self.url, callback=self.parse,
+                                 errback=self.errback)
+
+    @property
+    def root_dir_item(self):
+        return self._root_dir_item
+
+    @root_dir_item.setter
+    def root_dir_item(self, root_dir_item):
+        self._root_dir_item = root_dir_item
+
+    @property
+    def repo_name(self):
+        return self._repo_name
+
+    @repo_name.setter
+    def repo_name(self, repo_name):
+        if repo_name is not None:
+            self._repo_name = repo_name
+            self.url = Url.github_url(repo_name)
+
+    @property
+    def url(self):
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        self._url = url
+
+    def errback(self, failure):
+        if failure.check(HttpError):
+            url = failure.value.response.url
+            status = failure.value.response.status
+            if status == 404:
+                self.logger.error(f'Page "{url}" not found.')
+        elif failure.check(TimeoutError, TCPTimedOutError):
+            url = failure.request.url
+            self.logger.error(f'Connection error on {url}, make sure the '
+                              'address is reachable.')
 
     def parse(self, response):
         """
         Check whether the page exists, whether it contains a list of files
-            or not and triggers the corresponding method.
+            or not and triggers the corresponding parse method.
         """
         repository_content = response.css('.repository-content')
         if repository_content:
@@ -43,7 +104,7 @@ class GithubSpider(scrapy.Spider):
         # Check if parent directory exists, if so add to list of subfiles
         if 'parent' in response.meta:
             parent = response.meta['parent']
-            parent.children.append(dir_item)
+            parent['children'].append(dir_item)
         # Check if the page has the current file name,
         #   otherwise it is the root directory of the repository.
         file_name = response.css(
@@ -75,9 +136,8 @@ class GithubSpider(scrapy.Spider):
 
         # Only returns the root directory
         if dir_item['is_root']:
-            yield dir_item
-        else:
-            return None
+            self.root_dir_item = dir_item
+        return None
 
     def parse_file_content(self, response):
         """

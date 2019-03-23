@@ -6,7 +6,7 @@ import pytest
 from ..utils.url import Url
 
 
-class TestGithub:
+class TestUtilsUrl:
 
     def test_github_url(self):
         assert type(Url.github_url('')) is str, \
