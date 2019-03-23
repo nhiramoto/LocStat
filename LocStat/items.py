@@ -8,10 +8,6 @@ Model of itens scraped by the spider.
 import scrapy
 
 
-class LocstatItem(scrapy.Item):
-    pass
-
-
 class FileItem(scrapy.Item):
     name = scrapy.Field()
     amount_lines = scrapy.Field()

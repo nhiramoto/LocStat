@@ -9,17 +9,17 @@ from ..pipelines.txt_file_reader import TxtFileReader
 
 class TestTxtFileReader:
 
+    def test_opening_file(self, mocker):
+        TxtFileReader('repositories.txt')
+        with pytest.raises(FileNotFoundError):
+            TxtFileReader('notexists.txt')
+
     def test_file_path(self):
         txt_file_reader = TxtFileReader('repositories.txt')
         assert type(txt_file_reader.file_path) is str, \
             'file_path attribute is not a string.'
         assert txt_file_reader.file_path == 'repositories.txt', \
             'file_path attribute doesn\'t receive correct value.'
-
-    def test_file_not_exists(self):
-        txt_file_reader = TxtFileReader('notexists.txt')
-        with pytest.raises(FileNotFoundError):
-            txt_file_reader.get_all()
 
     def test_get_all_returns_list(self):
         txt_file_reader = TxtFileReader('repositories.txt')

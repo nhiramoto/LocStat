@@ -1,3 +1,4 @@
+import sys
 from ..utils.url import Url
 
 
@@ -8,6 +9,7 @@ class TxtFileReader:
 
     def __init__(self, file_path):
         self._file_path = file_path
+        self._file = open(self._file_path, 'r')
 
     @property
     def file_path(self):
@@ -18,7 +20,7 @@ class TxtFileReader:
         Returns a list of all repositories URLs from the file.
         """
         repo_urls = []
-        with open(self._file_path, 'r') as file:
+        with self._file as file:
             for line in file:
                 rel_url = line.strip(' \t\n/')
                 repo_urls.append(Url.github_url(rel_url))
