@@ -4,7 +4,7 @@ Unit test cases for repositories.txt file reader (txt_file_reader.py).
 
 import os
 import pytest
-from ..input_output.txt_file_reader import TxtFileReader
+from ..pipelines.txt_file_reader import TxtFileReader
 
 
 class TestTxtFileReader:
