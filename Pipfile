@@ -18,3 +18,5 @@ python_version = "3.7"
 [scripts]
 lint = "flake8 --statistics"
 tests = "pytest -v --cov LocStat/tests"
+crawl = "scrapy crawl github_spider"
+project = "python LocStat/main.py"

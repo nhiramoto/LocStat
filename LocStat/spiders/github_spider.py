@@ -5,8 +5,8 @@ import scrapy
 from scrapy.spidermiddlewares.httperror import HttpError
 from twisted.internet.error import TimeoutError, TCPTimedOutError
 
-from .. import items
-from ..utils.url import Url
+import items
+from utils.url import Url
 
 
 class GithubSpider(scrapy.Spider):
@@ -24,13 +24,14 @@ class GithubSpider(scrapy.Spider):
             in the constructor.
         """
         super(GithubSpider, self).__init__(*args, **kwargs)
-        self.root_dir_item = {}
-        repo_name = 'nhtoshiaki/LocStat'
+        self._root_dir_item = {}
+        self._repo_name = None
+        self._url = None
         if repo_name is not None:
             self.repo_name = repo_name
             self.url = Url.github_url(repo_name)
         else:
-            self.logger.critical('No repository set, make sure the repository'
+            self.logger.critical('No repository set, make sure the repository '
                                  'is set before running the spider.')
 
     def start_requests(self):
@@ -70,6 +71,8 @@ class GithubSpider(scrapy.Spider):
             status = failure.value.response.status
             if status == 404:
                 self.logger.error(f'Page "{url}" not found.')
+            elif status == 403:
+                self.logger.error(f'Page "{url}" not allowed.')
         elif failure.check(TimeoutError, TCPTimedOutError):
             url = failure.request.url
             self.logger.error(f'Connection error on {url}, make sure the '
@@ -161,15 +164,26 @@ class GithubSpider(scrapy.Spider):
             repository_content.css('.Box .Box-header .text-mono::text') \
             .getall()
         # Extracts the first integer number from each string in the list
-        file_info = list(map(
-            lambda field: int(re.findall(r'(\d+)', field)[0]),
-            file_info))
+        for i in range(len(file_info)):
+            match = re.findall(r'(\d+)', file_info[i])
+            if len(match) > 0:
+                file_info[i] = int(match[0])
+            else:
+                file_info[i] = None
+        file_info = list(filter(None, file_info))
 
         # Create a file item
         text_file_item = items.TextFileItem()
         text_file_item['name'] = file_name
-        text_file_item['amount_lines'] = file_info[0]
-        text_file_item['amount_bytes'] = file_info[1]
+        if len(file_info) == 2:
+            text_file_item['amount_lines'] = file_info[0]
+            text_file_item['amount_bytes'] = file_info[1]
+        elif len(file_info) == 1:
+            text_file_item['amount_lines'] = 0
+            text_file_item['amount_bytes'] = file_info[0]
+        else:
+            text_file_item['amount_lines'] = 0
+            text_file_item['amount_bytes'] = 0
         text_file_item['extension'] = extension
         # Check if parent directory exists, if so add to list of subfiles
         if 'parent' in response.meta:

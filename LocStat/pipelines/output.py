@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .. import items
+import items
 
 
 class TxtFileWriter:

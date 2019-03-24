@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from . import output
+from pipelines import output
 
 
 class LocStatPipeline(object):
@@ -17,15 +17,13 @@ class LocStatPipeline(object):
         After closing the spider serializes the structure of the repository on
             file.
         """
-        print(f'The spider finished parsing the "{spider.repo_name}"'
-              ' repository.')
-        if spider and hasattr(spider, 'repo_name') \
-                and hasattr(spider, 'root_dir_item'):
+        if spider.repo_name and spider.root_dir_item:
+            spider.logger.info(f'The spider finished parsing the '
+                               f'"{spider.repo_name}" repository.')
             file_name = spider.repo_name.strip(' /\t\n').replace('/', '-') \
                 + '.txt'
             root_dir_item = spider.root_dir_item
             root_dir_item.update_lines_bytes()
             root_dir_item.update_index()
-            print(f'root_dir_item: {root_dir_item}')
             with output.TxtFileWriter(file_name) as writer:
                 writer.write(root_dir_item)
