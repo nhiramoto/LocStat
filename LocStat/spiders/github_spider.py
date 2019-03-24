@@ -30,8 +30,8 @@ class GithubSpider(scrapy.Spider):
             self.repo_name = repo_name
             self.url = Url.github_url(repo_name)
         else:
-            self.logger.critical('No repository set, make sure the repository \
-                                 is set before running the spider.')
+            self.logger.critical('No repository set, make sure the repository'
+                                 'is set before running the spider.')
 
     def start_requests(self):
         if self.url is not None:
@@ -112,8 +112,8 @@ class GithubSpider(scrapy.Spider):
         if file_name is None:
             dir_item['name'] = ''
             dir_item['is_root'] = True
-            dir_item['repository_name'] = response.css(
-                '.repohead .public [itemprop="name"] a::text').get()
+            dir_item['repository_relurl'] = self.repo_name
+            dir_item['repository_name'] = self.repo_name.split('/')[1]
         else:
             dir_item['name'] = file_name
             dir_item['is_root'] = False

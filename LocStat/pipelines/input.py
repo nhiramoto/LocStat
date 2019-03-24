@@ -23,6 +23,14 @@ class TxtFileReader:
         self._file_path = file_path
 
     @property
+    def file(self):
+        return self._file
+
+    @file.setter
+    def file(self, file):
+        self._file = file
+
+    @property
     def closed(self):
         if self.file:
             return self.file.closed

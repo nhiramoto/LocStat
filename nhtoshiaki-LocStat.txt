@@ -1,0 +1,46 @@
+Repositório: nhtoshiaki/LocStat
+Total de linhas: 1373
+Total de bytes: 4409
+
+Extensão   |     Linhas      |      Bytes     
+===========|=================|================
+py         |     727 ( 52 %) |   3068 ( 69 %)
+txt        |       4 (  0 %) |     33 (  0 %)
+lock       |     430 ( 31 %) |     22 (  0 %)
+cfg        |      12 (  0 %) |    257 (  5 %)
+md         |       6 (  0 %) |    446 ( 10 %)
+<outros>   |     194 ( 14 %) |    583 ( 13 %)
+
+[LocStat]
+|-- [LocStat]
+|   |-- [pipelines]
+|   |   |-- __init__.py (0 linhas)
+|   |   |-- output.py (48 linhas)
+|   |   |-- input.py (42 linhas)
+|   |-- settings.py (94 linhas)
+|   |-- middlewares.py (104 linhas)
+|   |-- main.py (16 linhas)
+|   |-- items.py (68 linhas)
+|   |-- __init__.py (0 linhas)
+|   |-- [utils]
+|   |   |-- __init__.py (0 linhas)
+|   |   |-- url.py (30 linhas)
+|   |-- [tests]
+|   |   |-- test_utils_url.py (27 linhas)
+|   |   |-- test_pipeline_input.py (50 linhas)
+|   |   |-- test_items.py (64 linhas)
+|   |   |-- __init__.py (0 linhas)
+|   |   |-- [txt_files]
+|   |   |   |-- 3_repositories.txt (4 linhas)
+|   |-- [spiders]
+|   |   |-- __init__.py (5 linhas)
+|   |   |-- github_spider.py (179 linhas)
+|-- Pipfile.lock (430 linhas)
+|-- scrapy.cfg (12 linhas)
+|-- repositories.txt (0 linhas)
+|-- README.md (6 linhas)
+|-- .gitignore (124 linhas)
+|-- Pipfile (21 linhas)
+|-- .flake8 (5 linhas)
+|-- LICENSE (22 linhas)
+|-- .travis.yml (22 linhas)

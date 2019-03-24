@@ -16,7 +16,10 @@ class FileItem(scrapy.Item):
 
 class DirectoryItem(FileItem):
     is_root = scrapy.Field()
+    repository_relurl = scrapy.Field()
     repository_name = scrapy.Field()
+    # Index of extensions and your amount of lines and bytes.
+    index = scrapy.Field()
     children = scrapy.Field()
 
     def update_lines_bytes(self):
@@ -32,35 +35,35 @@ class DirectoryItem(FileItem):
                 self['amount_lines'] += child['amount_lines']
                 self['amount_bytes'] += child['amount_bytes']
 
-    def index_extensions(self):
+    def update_index(self):
         """
         Creates an index with the total of lines and bytes for each file
           type.
         """
-        def index_extensions_recursively(dir_item, index):
-            if 'children' in dir_item.fields \
-                    and type(dir_item['children']) is list:
-                for child in dir_item['children']:
-                    if isinstance(child, TextFileItem) \
-                            and 'extension' in child.fields \
-                            and 'amount_lines' in child.fields \
-                            and 'amount_bytes' in child.fields:
-                        if child['extension'] in index:
-                            index[child['extension']]['amount_lines'] += \
-                                child['amount_lines']
-                            index[child['extension']]['amount_bytes'] += \
-                                child['amount_bytes']
-                        else:
-                            index[child['extension']] = {
-                                'amount_lines': child['amount_lines'],
-                                'amount_bytes': child['amount_bytes']
-                            }
-                    elif isinstance(child, DirectoryItem):
+        def index_extensions_recursively(item, index):
+            if isinstance(item, TextFileItem) \
+                    and 'extension' in item \
+                    and 'amount_lines' in item \
+                    and 'amount_bytes' in item:
+                if item['extension'] in index:
+                    index[item['extension']]['amount_lines'] += \
+                        item['amount_lines']
+                    index[item['extension']]['amount_bytes'] += \
+                        item['amount_bytes']
+                else:
+                    index[item['extension']] = {
+                        'amount_lines': item['amount_lines'],
+                        'amount_bytes': item['amount_bytes']
+                    }
+            elif isinstance(item, DirectoryItem):
+                if 'children' in item \
+                        and type(item['children']) is list:
+                    for child in item['children']:
                         index_extensions_recursively(child, index)
 
         index = {}
         index_extensions_recursively(self, index)
-        return index
+        self['index'] = index
 
 
 class TextFileItem(FileItem):

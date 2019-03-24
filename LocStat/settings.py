@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'LocStat.spiders'
 
 # Crawl responsibly by identifying yourself (and your website)
 # on the user-agent
-USER_AGENT = 'LocStatBot/1.0'
+USER_AGENT = 'LocStat/1.0'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -67,7 +67,7 @@ COOKIES_ENABLED = False
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'LocStat.pipelines.output.TxtFileWriterPipeline': 300,
+    'LocStat.pipelines.locstat_pipeline.LocStatPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
