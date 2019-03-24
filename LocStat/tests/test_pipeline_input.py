@@ -28,14 +28,18 @@ class TestTxtFileReader:
                 m.assert_called_with('repositories.txt', 'r')
 
     def test_file_path(self, reader):
-        with reader:
-            assert type(reader.file_path) is str, \
-                'file_path attribute is not a string.'
-            assert reader.file_path == 'repositories.txt', \
-                'file_path attribute doesn\'t receive correct value.'
+        with mock.patch('builtins.open', new=mock.mock_open(
+                read_data=TestTxtFileReader.file_content)):
+            with TxtFileReader('repositories.txt') as reader:
+                assert type(reader.file_path) is str, \
+                    'file_path attribute is not a string.'
+                assert reader.file_path == 'repositories.txt', \
+                    'file_path attribute doesn\'t receive correct value.'
 
     def test_get_all_returns_list(self, reader):
-        with reader:
-            repo_urls = reader.get_all()
-            assert type(repo_urls) is list, \
-                'get_all method doesn\'t return a list.'
+        with mock.patch('builtins.open', new=mock.mock_open(
+                read_data=TestTxtFileReader.file_content)):
+            with TxtFileReader('repositories.txt') as reader:
+                repo_urls = reader.get_all()
+                assert type(repo_urls) is list, \
+                    'get_all method doesn\'t return a list.'
