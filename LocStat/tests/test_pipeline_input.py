@@ -25,7 +25,7 @@ class TestTxtFileReader:
         with mock.patch('builtins.open',
                         new=mock.mock_open()) as m:
             with TxtFileReader('repositories.txt'):
-                m.assert_called_with('repositories.txt', 'r')
+                m.assert_called_with('repositories.txt', 'r', encoding='utf-8')
 
     def test_file_path(self, reader):
         with mock.patch('builtins.open', new=mock.mock_open(
