@@ -74,6 +74,10 @@ O projeto inclui alguns testes, para executá-los:
 pipenv run tests
 ```
 
+## Log
+
+No fim da execução é gerado um arquivo `github_spider.log` com mais detalhes do passo-a-passo da execução do crawler.
+
 ## Implementado com
 
 - [Scrapy](https://scrapy.org/)
