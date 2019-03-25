@@ -19,7 +19,7 @@ pip install pipenv
 
 > O comando anterior deve ser executado com elevação de privilégio, aplique de acordo com o sistema utilizado.
 
-## Instalando repositório
+## Instalação
 
 Antes de executar o projeto:
 

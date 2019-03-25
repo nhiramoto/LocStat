@@ -125,3 +125,6 @@ dmypy.json
 # txt files
 *.txt
 !requirements.txt
+
+# VSCode
+.vscode/

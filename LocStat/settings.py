@@ -92,3 +92,8 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# Logging
+LOG_ENABLED=True
+LOG_ENCODING='utf-8'
+LOG_FILE='github_spider.log'
