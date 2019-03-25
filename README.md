@@ -36,6 +36,14 @@ cd LocStat
 pipenv install
 ```
 
+### Usuários Windows
+
+Para usuários windows a seguinte dependência precisa ser instalada:
+
+```sh
+pipenv install pypiwin32
+```
+
 ## Como usar
 
 Este programa lê a lista de repositórios de um arquivo chamado `repositories.txt` que deve estar no diretório raiz do projeto. Cada linha do `repositories.txt` deve conter a referência de um repositório no Github no formato `user_name/repository_name`. Caso a linha comece com o símbolo `#` o repositório é descartado. Por exemplo, se o arquivo conter:
