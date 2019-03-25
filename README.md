@@ -14,7 +14,7 @@ Para utilizar este projeto os seguintes programas devem estar instalados:
 Caso não tenha o Pipenv, para instalá-lo basta executar o pip:
 
 ```sh
-# pip install pipenv
+pip install pipenv
 ```
 
 > O comando anterior deve ser executado com elevação de privilégio, aplique de acordo com o sistema utilizado.
@@ -54,7 +54,13 @@ Para executar o projeto basta executar:
 pipenv run project
 ```
 
-Após executar o projeto, para cada repositório listado no `repositories.txt` o programa cria um arquivo renomeado no formato `user_name-repository_name.txt` com a estatística da quantidade de linhas e bytes para cada tipo de arquivo encontrado no repositório. Além disso, a estrutura de arquivos do repositório também é representado no arquivo.
+Após executar o projeto, para cada repositório listado no `repositories.txt` o programa cria um arquivo renomeado no formato `user_name-repository_name.txt` com as seguintes informações:
+
+- Referência do repositório (`user_name/repository_name`)
+- Quantidade total de linhas
+- Quantidade total de bytes
+- Tabela com a quantidade e porcentagem de linhas e bytes para cada tipo de arquivo
+- Estrutura da árvore de arquivos do projeto
 
 ## Configurando o crawler
 
