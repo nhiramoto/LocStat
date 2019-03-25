@@ -64,7 +64,7 @@ Após executar o projeto, para cada repositório listado no `repositories.txt` o
 
 ## Configurando o crawler
 
-As configurações do crawler estão contidos no arquivo [`settings.py`](https://github.com/nhtoshiaki/LocStat/blob/master/LocStat/settings.py), neste arquivo podem ser alterados por exemplo o user-agent e o delay dos requests configurado para o crawler.
+As configurações do crawler estão contidos no arquivo [`settings.py`](https://github.com/nhtoshiaki/LocStat/blob/master/LocStat/settings.py), neste arquivo podem ser alterados por exemplo o user-agent e o delay dos requests configurados para o crawler.
 
 ## Testes
 
@@ -73,3 +73,11 @@ O projeto inclui alguns testes, para executá-los:
 ```sh
 pipenv run tests
 ```
+
+## Implementado com
+
+- [Scrapy](https://scrapy.org/)
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](https://github.com/nhtoshiaki/LocStat/blob/master/LICENSE) para mais detalhes.
