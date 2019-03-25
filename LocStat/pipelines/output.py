@@ -12,7 +12,7 @@ class TxtFileWriter:
         self.file_path = file_path
 
     def __enter__(self):
-        self.file = open(self.file_path, 'w')
+        self.file = open(self.file_path, 'w', encoding='utf-8')
         return self
 
     def __exit__(self, *args):
@@ -44,7 +44,7 @@ class TxtFileWriter:
 
     def write(self, root_dir_item):
         if self.file and not self.file.closed:
-            self.file.write(f'Repositório: '
+            self.file.write(f'Repositorio: '
                             f'{root_dir_item["repository_relurl"]}\n')
             self.file.write(f'Total de linhas: '
                             f'{root_dir_item["amount_lines"]}\n')
@@ -61,7 +61,7 @@ class TxtFileWriter:
           extension.
         """
         if self.file and not self.file.closed:
-            self.file.write(f'{"Extensão":<10} | {"Linhas":^15} | '
+            self.file.write(f'{"Extensao":<10} | {"Linhas":^15} | '
                             f'{"Bytes":^15}\n')
             self.file.write(f'{"":=<11}|{"":=^17}|{"":=^16}\n')
             if 'index' in root_dir_item:

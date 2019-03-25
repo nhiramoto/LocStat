@@ -11,7 +11,7 @@ class TxtFileReader:
         self._file_path = file_path
 
     def __enter__(self):
-        self._file = open(self._file_path, 'r')
+        self._file = open(self._file_path, 'r', encoding='utf-8')
         return self
 
     def __exit__(self, *args):
